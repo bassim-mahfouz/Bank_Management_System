@@ -160,9 +160,9 @@ a {
 
 .nav-pills .nav-link.active,
 .nav-pills .show > .nav-link {
-  color: #fff;
-  background-color: #1b6ec2;
-  border-color: #1861ac;
+  color: #201E20;
+  background-color: #201E20;
+  border-color: #201E20;
 }
 
 /* Sticky footer styles
@@ -356,7 +356,7 @@ ul.nav.nav-tabs {
 }
 
 .active {
-    background: var(--clr-white);
+    background: #201E20;
 }
 
 :root {

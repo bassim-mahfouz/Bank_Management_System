@@ -1,0 +1,120 @@
+
+@page
+@model AdminIndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+<style>
+  body{
+      background-color: #201E20;
+      color: black;
+  }
+  .a{
+      background-color: #DDC3A5;
+      border-radius: 20px;
+      border: 2px solid #E0A96D;
+      width: 500px;
+      height: 180px;
+      margin-left: 30px;
+      display: flex;
+      margin-top: 30px;
+      }
+
+    .img_c{
+      width: 150px;
+      height: 178px;
+      border-radius: 20px 0 0 20px;
+    }
+    .con{
+      display: flex;
+    }
+    .theme{
+      margin-top: 20px;
+      margin-left: 20px;
+      height: 200px;
+      width: 210px;
+    }
+    .c{
+        background-color: #201E20;
+        color:white;
+        width: 80px;
+    }
+    .mainclass{
+      transform: translate(-80px,10px);
+    }
+</style>
+
+<div class="mainclass">
+
+<div class="con " >
+
+  <div class="a">
+      <div><img src="employee.jpg" class="img_c"></div>    
+        <div class="theme">
+          <h5 class="card-title">Employees</h5>
+          <p style="font-size:15px;" class="card-text"> Add ,Update and
+             Remove Employees</p> 
+        <a href="/EmployeeManagement/EmployeeManagement" class="btn c">Start</a>
+      </div>
+</div>
+
+<div class="a">
+      <div><img src="account.jpg" class="img_c"></div>    
+        <div class="theme">
+          <h5 class="card-title">Accounts</h5>
+          <p style="font-size:15px;" class="card-text"> Create And Close Accounts</p> 
+          <br>
+        <a href="./Accounts" class="btn c" >Start</a>
+      </div>
+</div>
+
+
+<div class="a">
+      <div><img src="loan1.jpg" class="img_c"></div>    
+        <div class="theme">
+          <h5 class="card-title">Loans</h5>
+          <p style="font-size:15px;" class="card-text">Create a new loan</p>
+          <br>
+        <a href="./Loans" class="btn c">Start</a>
+      </div>
+</div>
+
+
+   
+</div>
+
+<div class="con ">
+<div class="a">
+      <div><img src="merge.png" class="img_c"></div>    
+        <div class="theme">
+          <h5 class="card-title">Data merging</h5>
+          <p style="font-size:15px;" class="card-text">merge data file in the database</p> 
+          <br>
+        <a href="./DataMerging" class="btn c" >Start</a>
+      </div>
+</div>
+
+<div class="a">
+      <div><img src="export1.png" class="img_c"></div>    
+        <div class="theme">
+          <h5 class="card-title">Export data</h5>
+          <p style="font-size:15px;" class="card-text">Export data in excel files</p> 
+          <br>
+        <a href="LoanManagement" class="btn c">Start</a>
+      </div>
+</div>
+
+<div class="a">
+      <div><img src="actions.jpg" class="img_c"></div>    
+        <div class="theme">
+          <h5 class="card-title">Employees actions</h5>
+          <p style="font-size:15px;" class="card-text">Browse actions managed by employees</p> 
+        <a href="LoanManagement" class="btn c" >Start</a>
+      </div>
+</div>
+
+</div>
+
+</div>
+
+

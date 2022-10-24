@@ -1,0 +1,172 @@
+@page
+@model CreateModel
+@{
+    ViewData["Title"] = "Home page";
+}
+<style>
+    body {
+        background-color: #201E20;
+    }
+
+    .c {
+        color: #DDC3A5;
+        background-color: #201E20;
+        border-radius: 5px;
+        height: 40px;
+        border: 2px solid #DDC3A5;
+    }
+
+    .c:hover {
+        color: black;
+        background-color: #DDC3A5;
+        border-radius: 5px;
+        height: 40px;
+        border: 2px solid black;
+    }
+
+    .a {
+        margin-left: 20px;
+        color: red;
+        background-color: #201E20;
+        border-radius: 5px;
+        height: 40px;
+        border: 2px solid red;
+        padding: 5px;
+
+    }
+
+    .a:hover {
+
+        color: black;
+        background-color: red;
+        border-radius: 5px;
+        height: 40px;
+        border: 2px solid black;
+    }
+
+    .c_input {
+        background-color: #201E20;
+        border-top: 2px #201E20 solid;
+        border-left: 2px #201E20 solid;
+        border-right: 2px #201E20 solid;
+        border-bottom: 2px #DDC3A5 solid;
+        color: #DDC3A5;
+        height: 40px;
+        width: 500px;
+
+    }
+
+    .c_input:focus {
+        background-color: #201E20;
+        border-top: 2px #201E20 solid;
+        border-left: 2px #201E20 solid;
+        border-right: 2px #201E20 solid;
+        border-bottom: 2px #DDC3A5 solid;
+        color: #DDC3A5;
+        height: 40px;
+        width: 500px;
+    }
+
+    #amount {
+        width: 300px;
+    }
+</style>
+<a href="../AdminIndex" class="c btn" style="margin-left: 1100px;" >Home</a>
+
+<br>
+<h2 style="color: #DDC3A5;">
+    Create a New Loan
+</h2>
+<br>
+<br>
+<form method="post">
+    <div style="display: flex;">
+        <div>
+            <div class="form-group">
+                <label class="control-label" style="color: #DDC3A5;">Customer Id</label>
+                <input type="hidden" asp-for="id">
+                <label class="form-control c_input">@Model.id </label>
+            </div>
+            <div class="form-control-custom">
+                <label asp-for="loan.Currency" style="color: #DDC3A5;"></label><br>
+                <select class="form-control c_input" asp-items="@Model.correncyList" asp-for="loan.Currency"></select>
+                <br>
+            </div>
+            <br>
+            <div class="form-group">
+                <label asp-for="loan.Amount" class="control-label" style="color: #DDC3A5;"></label>
+                <br>
+                <input asp-for="loan.Amount" class="c_input" id="totalAmount" placeholder="loan Amount" />
+                <br>
+                <span asp-validation-for="loan.Amount" class="text-danger"></span>
+            </div>
+            <br>
+            <input type="submit" value="Create" class="btn c" />
+
+        </div>
+
+        <div style="margin-left:60px ;">
+            <div class="form-group">
+                <label class="control-label" style="color: #DDC3A5;">Loan Deadline date</label>
+                <br>
+                <input id="date" type="date" asp-for="loan.LoanDeadline" class="c_input" placeholder="Deadline  date" />
+                <br>
+                <span asp-validation-for="loan.LoanDeadline" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label" style="color: #DDC3A5;">Amount Paid Per Installment</label>
+                <br>
+                <div style="display: ;flex">
+                    <input asp-for="loan.AmountPaidPerInstallment" id="amount" class="c_input" 
+                        placeholder="amount" />
+                    <label id="calculate" class="control-label a">calculate</label>
+                </div>
+                <span asp-validation-for="loan.AmountPaidPerInstallment" class="text-danger"></span>
+                <div type="hidden" id="duration" asp-for="duration"></div>
+            </div>
+        <div asp-validation-summary="ModelOnly" style="color:red ;"></div>
+        </div>
+
+    </div>
+
+</form>
+
+
+
+@section scripts{
+<script>
+
+    $("#calculate").on("click", function () {
+
+
+        var from1 = $("#date").val().split("-");
+        var from2 = new Date().toISOString().slice(0, 10).split("-");
+        var date1 = new Date(from1[0], from1[1], from1[2]);
+        var date2 = new Date(from2[0], from2[1], from2[2]);
+
+        var millisBetween = date1.getTime() - date2.getTime();
+
+        var month = millisBetween / (1000 * 3600 * 24 * 30);
+
+        if (month < 1) {
+
+            amount = $("#totalAmount").val();
+            if(month<0)
+            {
+                amount=0;
+                alert("the Deadline Date should be greater the today date");
+            }
+        }
+        else {
+            amount = Math.round($("#totalAmount").val() / month);
+
+        }
+        $("#duration").val(month);        
+        $("#amount").val(amount);
+
+    })
+
+
+</script>
+}

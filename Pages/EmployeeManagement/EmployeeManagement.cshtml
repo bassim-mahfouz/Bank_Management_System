@@ -1,0 +1,106 @@
+
+@page
+@model EmployeeManagementModel
+@{
+    ViewData["Title"] = "Home page";
+}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
+
+<style>
+  body{
+      background-color: #201E20;
+      color: white;
+    }      
+
+    .c{
+      color:#DDC3A5;
+      background-color: #201E20;
+      border-radius: 5px;
+      height: 40px;
+      border: 2px solid #DDC3A5;
+    }
+    .c:hover{
+      color:black;
+      background-color: #DDC3A5;
+      border-radius: 5px;
+      height: 40px;
+      border: 2px solid black;
+    }
+    .c_input{
+              background-color: #201E20;
+              border-top: 2px #201E20 solid;
+              border-left: 2px #201E20 solid;
+              border-right: 2px #201E20 solid;
+              border-bottom: 2px #DDC3A5 solid;
+              color: #DDC3A5;
+              height: 40px;
+    }
+   
+    th{
+        background-color:  #DDC3A5;
+        color: black;
+
+    }
+    td{
+        background-color: #201E20;
+        color: #DDC3A5;
+        border-bottom: 2px solid #DDC3A5;
+
+    }
+    table{
+        border-left:2px  #DDC3A5 solid ;
+        border-right:2px  #DDC3A5 solid ;
+        border-radius: 12px 12px 0 0 ;
+    }
+</style>
+<a href="../AdminIndex" class="c btn" style="margin-left: 1035px;" >Home</a>
+<br>
+
+<div class="d-flex justify-content-between" style="margin-top: 20px;">
+    <form method="post">
+    <div> 
+        <input asp-for="name" placeholder="search by name" class="c_input">
+        <button type="submit" class="btn c" style="width: 100px;">Search</button>
+    </div>
+    </form>
+    <form asp-action="Index" method="get">
+        <div class="form-actions">
+        <a href="Create" class="btn c" >New Employee</a>
+        </div>
+    </form>
+</div>
+
+<br/>
+
+<table class="table " >
+    <thead>
+        <tr>
+            <th>
+                    Name
+            </th>
+            <th>
+                    Password
+            </th>
+            <th>
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Employees)
+        {
+            <tr>
+                <td>
+                    @item.Name
+                </td>
+                <td>
+                    @item.Password                
+                </td>
+                <td class="d-flex justify-content-around">
+                    <a asp-page="./Details" asp-route-name="@item.Name"><i class="bi bi-ticket-detailed"></i></a>|
+                    <a asp-page="./Edit" asp-route-name="@item.Name"> <i class="bi bi-pencil"  style="color:green ;"></i> </a> |
+                    <a asp-page="./EmployeeManagement"  asp-route-delete="@item.Name"><i class="bi bi-trash" style="color:red ;"></i></a> 
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

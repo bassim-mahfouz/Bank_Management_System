@@ -1,0 +1,19 @@
+﻿@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor;
+
+<style>
+    .d{
+        background-color: #201E20;
+        color:white;
+    }
+</style>
+@if (HttpContextAccessor.HttpContext.User.Identity.IsAuthenticated)
+{
+    <ul class="navbar-nav" style="margin-right: 0px;">
+        <li class="nav-item">
+            <span class="nav-link text-dark">@User.Identity.Name</span>
+        </li>
+        <li class="nav-item">
+            <a asp-page="/Login" class="d btn">Log Out</a>
+        </li>
+    </ul>
+}

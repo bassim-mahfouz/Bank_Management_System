@@ -1,0 +1,128 @@
+﻿@page
+@model LoginModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+<style>
+    body {
+        background-color: #201E20;
+        color: black;
+    }
+
+    .a {
+        background-color: #DDC3A5;
+        border-radius: 10px;
+        border: 2px solid;
+        text-align: center;
+    }
+
+    .a1 {
+        background-color: #DDC3A5;
+        border: 2px solid;
+        text-align: center;
+    }
+
+    a {
+        color: white;
+    }
+
+    a:hover {
+        color: white;
+    }
+</style>
+
+
+<div class="container" style="margin-top: 50px;">
+    <ul class="nav nav-tabs ">
+        <li id="forms-list">
+
+            <div class="d-flex justify-content-center ">
+                <a id="login-hod" href="#" class="nav-link active a1">Employee</a>
+                <a id="login-admin" href="#" class="nav-link a1">Admin</a>
+            </div>
+
+            <div id="hod" class="text-center">
+                <section class="form a">
+                    <form id="account" method="post">
+                        <h4>Login</h4>
+                        <hr />
+                        <div class="form-control-custom">
+                            <label asp-for="EmployeeInput.Name"></label>
+                            <input asp-for="EmployeeInput.Name" />
+                        </div>
+                        <div class="form-control-custom">
+                            <label asp-for="EmployeeInput.Password"></label>
+                            <input autocomplete asp-for="EmployeeInput.Password" />
+                        </div>
+                        <button type="submit" class="btn">Login</button>
+                        <div asp-validation-summary="All"></div>
+                    </form>
+                </section>
+            </div>
+
+
+            <div id="admin" class="text-center">
+                <section class="form a">
+                    <form asp-page-handler="Admin" id="account" method="post">
+                        <h4>Login</h4>
+                        <hr />
+                        <div class="form-control-custom">
+                            <label asp-for="AdminInput.Name"></label>
+                            <select asp-for="AdminInput.Name">
+                                @foreach (var Admin in Model.Admins)
+                                {
+                                    <option>@Admin</option>
+                                }
+                            </select>
+                        </div>
+                        <div class="form-control-custom">
+                            <label asp-for="AdminInput.Password"></label>
+                            <input asp-for="AdminInput.Password" />
+                        </div>
+                        <button type="submit" class="btn">Login</button>
+                        <div asp-validation-summary="All"></div>
+                    </form>
+                </section>
+            </div>
+        </li>
+    </ul>
+</div>
+
+@section scripts{
+<script>
+    var adminForm = document.getElementById("admin");
+    var hodForm = document.getElementById("hod");
+
+    adminForm.remove();
+    $("#login-admin").on("click", function () {
+        this.classList.add("active");
+        $("#forms-list").append(adminForm);
+        hodForm.remove();
+        $("#login-hod").removeClass("active");
+        buttonToggle();
+    })
+    $("#login-hod").on("click", function () {
+        this.classList.add("active");
+        $("#forms-list").append(hodForm);
+        adminForm.remove();
+        $("#login-admin").removeClass("active");
+    })
+    buttonToggle();
+    function buttonToggle() {
+        $('.btn').attr('disabled', 'disabled');
+        $('.form-control-custom input').on('keyup', function () {
+            let empty = false;
+
+            $('.form-control-custom input').each(function () {
+                empty = $(this).val().length == 0;
+            });
+
+            if (empty)
+                $('.btn').attr('disabled', 'disabled');
+            else
+                $('.btn').attr('disabled', false);
+        });
+    };
+</script>
+}

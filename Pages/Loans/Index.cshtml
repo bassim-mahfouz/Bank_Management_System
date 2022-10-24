@@ -1,0 +1,190 @@
+@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+
+
+<style>
+    body {
+        background-color: #201E20;
+    }
+
+    .c {
+        color: #DDC3A5;
+        background-color: #201E20;
+        border-radius: 5px;
+        height: 40px;
+        border: 2px solid #DDC3A5;
+    }
+
+    .c:hover {
+        color: black;
+        background-color: #DDC3A5;
+        border-radius: 5px;
+        height: 40px;
+        border: 2px solid black;
+    }
+
+    .c_input {
+        background-color: #201E20;
+        border-top: 2px #201E20 solid;
+        border-left: 2px #201E20 solid;
+        border-right: 2px #201E20 solid;
+        border-bottom: 2px #DDC3A5 solid;
+        color: #DDC3A5;
+        height: 40px;
+        width: 500px;
+    }
+
+    .coloring {
+        color: #DDC3A5;
+    }
+
+    .active {
+        color: white;
+        border-bottom: 2px white solid;
+    }
+
+    a:hover {
+        color: #DDC3A5;
+        text-decoration: none;
+    }
+
+    .active:hover {
+        color: white;
+        border-bottom: 2px white solid;
+        text-decoration: none;
+
+    }
+</style>
+<a href="../AdminIndex" class="c btn" style="margin-left: 1100px;" >Home</a>
+
+<h3 class="coloring">Create Account </h3>
+<br>
+<div class="d-flex">
+    <a id="old" href="#" class="coloring active">Existing customer</a>
+    <a id="new" href="#" class="coloring" style="margin-left: 50px;">New customer </a>
+</div>
+<br>
+<div id="forms-list">
+    <div id="oldForm">
+        <form method="post">
+            <div class="form-group">
+                <label asp-for="customer.Id" class="control-label" style="color: #DDC3A5;"></label>
+                <br>
+                <input asp-for="customer.Id" class="c_input" placeholder="Enter  Id" />
+                <br>
+                <span asp-validation-for="customer.Id" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="customer.FirstName" class="control-label" style="color: #DDC3A5;"></label>
+                <br>
+                <input asp-for="customer.FirstName" class="c_input" placeholder="Enter first name" />
+                <br>
+                <span asp-validation-for="customer.FirstName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="customer.Password" class="control-label" style="color: #DDC3A5;"></label>
+                <br>
+                <input asp-for="customer.Password" class="c_input" placeholder="Enter  password" />
+                <br>
+                <span asp-validation-for="customer.Password" class="text-danger"></span>
+            </div>
+            <br />
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <button type="submit" class="btn c">Continue</button>
+
+        </form>
+    </div>
+
+    <div id="newForm">
+        <form asp-page-handler="New" id="account" method="post">
+            <div style="display: flex;">
+                <div>
+                    <div class="form-group">
+                        <label asp-for="newCustomer.FirstName" class="control-label" style="color: #DDC3A5;"></label>
+                        <br>
+                        <input asp-for="newCustomer.FirstName" class="c_input" placeholder="Enter first name" />
+                        <br>
+                        <span asp-validation-for="newCustomer.FirstName" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="newCustomer.LastName" class="control-label" style="color: #DDC3A5;"></label>
+                        <br>
+                        <input asp-for="newCustomer.LastName" class="c_input" placeholder="Enter last name" />
+                        <br>
+                        <span asp-validation-for="newCustomer.LastName" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="newCustomer.PhoneNumber" class="control-label" style="color: #DDC3A5;"></label>
+                        <br>
+                        <input asp-for="newCustomer.PhoneNumber" class="c_input" placeholder="Enter phone number" />
+                        <br>
+                        <span asp-validation-for="newCustomer.PhoneNumber" class="text-danger"></span>
+                    </div>
+                    <br>
+
+                </div>
+                <div style="margin-left:60px ;">
+                    <div class="form-group">
+                        <label asp-for="newCustomer.Email" class="control-label" style="color: #DDC3A5;"></label>
+                        <br>
+                        <input asp-for="newCustomer.Email" class="c_input" placeholder="Enter Email" />
+                        <br>
+                        <span asp-validation-for="newCustomer.Email" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="newCustomer.Password" class="control-label" style="color: #DDC3A5;"></label>
+                        <br>
+                        <input asp-for="newCustomer.Password" class="c_input" placeholder="Enter  password" />
+                        <br>
+                        <span asp-validation-for="newCustomer.Password" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="confirmPassword" class="control-label" style="color: #DDC3A5;"></label>
+                        <br>
+                        <input asp-for="confirmPassword" class="c_input" placeholder="Enter confirmation password" />
+                        <br>
+                        <span asp-validation-for="confirmPassword" class="text-danger"></span>
+                    </div>
+
+                    <br />
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                </div>
+            </div>
+            <button type="submit" class="btn c">Continue</button>
+        </form>
+    </div>
+
+</div>
+
+
+
+@section scripts{
+<script>
+    var adminForm = document.getElementById("newForm");
+    var hodForm = document.getElementById("oldForm");
+
+    adminForm.remove();
+    $("#new").on("click", function () {
+        this.classList.add("active");
+        $("#forms-list").append(adminForm);
+        hodForm.remove();
+        $("#old").removeClass("active");
+        buttonToggle();
+    })
+    $("#old").on("click", function () {
+        this.classList.add("active");
+        $("#forms-list").append(hodForm);
+        adminForm.remove();
+        $("#new").removeClass("active");
+    })
+
+</script>
+}

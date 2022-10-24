@@ -1,0 +1,87 @@
+@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+
+
+<style>
+    body {
+        background-color: #201E20;
+    }
+
+    .c {
+        color: #DDC3A5;
+        background-color: #201E20;
+        border-radius: 5px;
+        height: 40px;
+        border: 2px solid #DDC3A5;
+    }
+
+    .c:hover {
+        color: black;
+        background-color: #DDC3A5;
+        border-radius: 5px;
+        height: 40px;
+        border: 2px solid black;
+    }
+
+    .c_input {
+        background-color: #201E20;
+        border-top: 2px #201E20 solid;
+        border-left: 2px #201E20 solid;
+        border-right: 2px #201E20 solid;
+        border-bottom: 2px #DDC3A5 solid;
+        color: #DDC3A5;
+        height: 40px;
+        width: 500px;
+    }
+
+    .coloring {
+        color: #DDC3A5;
+    }
+
+   
+</style>
+
+<a href="../AdminIndex" class="c btn" style="margin-left: 1100px;" >Home</a>
+
+@if (@Model.choose == 1)
+{
+<h1 style="color: #DDC3A5;">File added successfully</h1>
+
+    <a href="DataMerging/index" class="c btn" >merge a new file </a>
+
+        <br>
+        <br>
+        <hr>
+        @if(Model.duplicated.Count!=0)
+        {
+        <h2 style="color:red; border-bottom:2px red solid; width:1000px;">warning : there is some Customers that have id's that already exist </h2>
+        <br>
+        @foreach(var line in Model.duplicated)
+        {
+            <h4 style="color: #DDC3A5;">- @line</h4>
+        }
+        }
+
+}
+else
+{
+
+    <h1 style="color: #DDC3A5;">Choose a Csv file to be added to local customers data </h1>
+    <br />
+    <br />
+    <hr />
+
+    <form method="post" asp-page-handler="Add" enctype="multipart/form-data">
+
+        <span asp-for="@Model.file" style="color: #DDC3A5;"></span>
+        <input asp-for="@Model.file" class="c"  style="height: 35px;"/>
+
+        <input type="submit" value="Add" class="c" style="margin-left:20px ;">
+
+    </form>
+
+}
