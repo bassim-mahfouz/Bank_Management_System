@@ -26,6 +26,9 @@ namespace Bank_Management_System.Pages.Loans
 
         [BindProperty]
         public int duration{get;set;}
+        
+        [BindProperty]
+        public int click{get;set;}
 
         [BindProperty]
         public Loan loan{get;set;}
@@ -52,6 +55,7 @@ namespace Bank_Management_System.Pages.Loans
 
 
         public async Task<IActionResult> OnPostAsync(){
+            
             correncyList = new()
             {
                 new SelectListItem { Value = "LB", Text = "LB (not recomended)" , Selected = true},
@@ -59,34 +63,29 @@ namespace Bank_Management_System.Pages.Loans
                 new SelectListItem { Value = "EURO", Text = "EURO" },
             };
 
+            if(loan.Amount<=0)
+            {
+                 ModelState.AddModelError("", "The DeadLine Date should be greater then current day ");
+                 return Page();
+            }
+            if(loan.AmountPaidPerInstallment<=0)
+            {
+                ModelState.AddModelError("", "The amount paid per installement should be greater than 0");
+                return Page();
+            }
+
             if (!ModelState.IsValid)
             {
                 return Page();
             }
-            if(duration<-1)
-            {
-                 ModelState.AddModelError("", "The DeadLine Date should be greater then current day ");
-                   if(loan.Amount<=0)
-                    {
-                        ModelState.AddModelError("", "the loan amount should not be equal or smaller then 0");
-                    }
-                        return Page();
-                   
-            }
 
-            if(loan.Amount<=0)
-            {
-                ModelState.AddModelError("", "the loan amount should not be equal or smaller then 0");
-                return Page();
-            }
-          
-            
-   
+
             Customer customer=await _repository.GetCustomerById(id);
             DateTime localDate = DateTime.Now;
 
             loan.LoanDate=localDate.ToString();
             loan.LastPaidInstallment=localDate.ToString();
+            loan.PaidAmount=0;
             try
             {
                 customer.Loans.Add(loan);

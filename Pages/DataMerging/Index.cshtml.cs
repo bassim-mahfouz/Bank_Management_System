@@ -55,7 +55,8 @@ namespace Bank_Management_System.Pages.DataMerging
             tblcsv.Columns.Add("Password");
 
            System.Text.Encoding.RegisterProvider(System.Text.CodePagesEncodingProvider.Instance);
-            using (var stream = new MemoryStream())
+           
+           using (var stream = new MemoryStream())
             {
                 file.CopyTo(stream);
                 stream.Position = 0;

@@ -17,5 +17,5 @@ namespace Bank_Management_System.Models
         public float amount{get;set;}
         [Required]
         public string PaymentDate {get;set;}
-        }
+    }
 }

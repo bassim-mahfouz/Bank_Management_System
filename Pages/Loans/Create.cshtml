@@ -136,10 +136,11 @@
 
 @section scripts{
 <script>
+    
 
     $("#calculate").on("click", function () {
 
-
+        $("click").val(1);
         var from1 = $("#date").val().split("-");
         var from2 = new Date().toISOString().slice(0, 10).split("-");
         var date1 = new Date(from1[0], from1[1], from1[2]);
@@ -162,6 +163,7 @@
             amount = Math.round($("#totalAmount").val() / month);
 
         }
+        $("#hiddenCalculateAmount").val(amount);
         $("#duration").val(month);        
         $("#amount").val(amount);
 

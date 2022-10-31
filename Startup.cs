@@ -39,6 +39,8 @@ namespace Bank_Management_System
             services.AddScoped<CustomerRepository,CustomerRepository>();
             services.AddScoped<EmployeeRepository,EmployeeRepository>();
             services.AddScoped<AdminRepository,AdminRepository>();
+            services.AddScoped<AccountRepository,AccountRepository>();
+            services.AddScoped<LoanRepository,LoanRepository>();
 
             services.AddAuthentication()
                 .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme,options=>

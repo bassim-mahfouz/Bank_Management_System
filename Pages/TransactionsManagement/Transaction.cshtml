@@ -1,0 +1,198 @@
+@page
+@model TransactionModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+<style>
+    body {
+        background-color: #201E20;
+    }
+
+    .c {
+        color: #DDC3A5;
+        background-color: #201E20;
+        border-radius: 5px;
+        height: 40px;
+        border: 2px solid #DDC3A5;
+    }
+
+    .c:hover {
+        color: black;
+        background-color: #DDC3A5;
+        border-radius: 5px;
+        height: 40px;
+        border: 2px solid black;
+    }
+
+    .c_input {
+        background-color: #201E20;
+        border-top: 2px #201E20 solid;
+        border-left: 2px #201E20 solid;
+        border-right: 2px #201E20 solid;
+        border-bottom: 2px #DDC3A5 solid;
+        color: #DDC3A5;
+        height: 40px;
+        width: 500px;
+    }
+    .withdrawStyle{
+        background-color: #201E20;
+        border-top: 2px #201E20 solid;
+        border-left: 2px #201E20 solid;
+        border-right: 2px #201E20 solid;
+        border-bottom: 2px red solid;
+        color: #DDC3A5;
+    }
+    
+    .depositeStyle {
+        background-color: #201E20;
+        border-top: 2px #201E20 solid;
+        border-left: 2px #201E20 solid;
+        border-right: 2px #201E20 solid;
+        border-bottom: 2px blue solid;
+        color: #DDC3A5;
+    }
+
+    .coloring {
+        color: #DDC3A5;
+    }
+
+    .active {
+        color: white;
+        border-bottom: 2px white solid;
+    }
+
+    a:hover {
+        color: #DDC3A5;
+        text-decoration: none;
+    }
+
+    .active:hover {
+        color: white;
+        border-bottom: 2px white solid;
+        text-decoration: none;
+
+    }
+    input[type="checkbox"] {
+    color: #DDC3A5;
+    width: 1.2em;
+    height: 1.2em;
+    border: 0.15em solid #DDC3A5;
+    border-radius: 0.15em; 
+    place-content: center;
+    }
+
+</style>
+<a href="../EmployeeIndex" class="c btn" style="margin-left: 1100px;">Home</a>
+<h3 class="coloring">Transaction</h3>
+
+<br>
+<form method="post">
+    <div style="display:flex;">
+        <div>
+            <div class="form-group">
+                <label class="control-label" style="color: #DDC3A5;">AccountId</label>
+                <br>
+                <input asp-for="account.AccountId" class="c_input" disabled>
+                <input asp-for="AccountId" hidden>
+                <br>
+            </div>
+            <div class="form-group">
+                <label asp-for="account.Amount" class="control-label" style="color: #DDC3A5;"></label>
+                <br>
+                <input asp-for="account.Amount" id="balance" class="c_input" disabled/>
+                <input type="number" asp-for="account.Amount" id="balance" hidden>
+            </div>
+            <br>
+            <label style="color: #DDC3A5;">Transaction type:</label>
+            <br>
+            <br>
+
+            
+                <input type="radio" asp-for="transactionType" value="deposite" id="deposite" checked/> 
+                <label style="color: #DDC3A5; margin-left:30px;"> deposite</label>
+                <br> 
+                <input type="radio" asp-for="transactionType" value="withdraw" id="withdraw" /> 
+                <label style="color: #DDC3A5; margin-left:30px;">withdraw </label>
+                <br> 
+                <input asp-for="operation" hidden>
+            <br />
+        </div>
+        <div style="margin-left:40px;">
+            <div class="form-group">
+                <label id="transactionlabel" style="color: #DDC3A5;">transaction amount</label>
+                <input asp-for="amount" class="c_input" id="amount"/>
+            </div>
+            <div class="form-group">
+                <label style="color: #DDC3A5;">Amount after change</label>
+                <input   id="amountAfterChange" class="c_input" disabled/>
+            </div>
+            <br>
+            <br>
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <button type="submit" class="btn c">Continue</button>
+        </div>
+    </div>
+</form>
+
+
+@section scripts{
+<script>
+    $("#amountAfterChange").val(0);
+    $('input').addClass('depositeStyle');
+
+    $("#deposite").on("click", function () {
+    $("#operation").val("+");
+    $("#amount").val(0);
+    $("#amountAfterChange").val(0);
+    $('input').addClass('depositeStyle');
+    $('input').removeClass('withdrawStyle');
+
+    })
+
+    $("#withdraw").on("click", function () {
+    $("#operation").val("-");
+    $("#amount").val(0);
+    $("#amountAfterChange").val(0);
+    $('input').addClass('withdrawStyle');
+    $('input').removeClass('depositeStyle');
+
+    })
+
+    $("#amount").keyup(function(){
+
+        if($("#operation").val()==="-")
+        {
+            if((parseInt(($("#balance").val()))-parseInt($("#amount").val()))<0)
+            {
+                alert("withdraw amount should not be beager than account balance");
+                $("#amount").val(0);
+                $("#amountAfterChange").val(0);
+                return;
+            }
+            if(parseInt($("#amount").val())<0)
+            {
+                alert("transaction amount can't be negative");
+                $("#amount").val(0);
+                $("#amountAfterChange").val(0);
+                return;
+            }
+            $("#amountAfterChange").val(parseInt(($("#balance").val()))-parseInt($("#amount").val()));
+        }
+        else{
+            if(parseInt($("#amount").val())<0)
+            {
+                alert("transaction amount can't be negative");
+                $("#amount").val(0);
+                $("#amountAfterChange").val(0);
+                return;
+            }
+
+            $("#amountAfterChange").val(parseInt($("#balance").val())+parseInt($("#amount").val()));
+        }
+
+    })
+
+</script>
+
+}

@@ -19,6 +19,9 @@ namespace Bank_Management_System.Models
         [Required]
         public float Amount{get;set;}
 
+        [Required]
+        public float PaidAmount{get;set;}
+
         public string LoanDate {get;set;}
 
         [Required]
@@ -35,4 +38,5 @@ namespace Bank_Management_System.Models
         public List<PaidInstallment> PaidInstallments { get; set; }
 
         }
+        
 }

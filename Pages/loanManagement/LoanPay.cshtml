@@ -1,0 +1,150 @@
+@page
+@model LoanPayModel
+
+@{
+    ViewData["Title"] = "Home page";
+}
+
+<style>
+    body {
+        background-color: #201E20;
+    }
+
+    .c {
+        color: #DDC3A5;
+        background-color: #201E20;
+        border-radius: 5px;
+        height: 40px;
+        border: 2px solid #DDC3A5;
+    }
+
+    .c:hover {
+        color: black;
+        background-color: #DDC3A5;
+        border-radius: 5px;
+        height: 40px;
+        border: 2px solid black;
+    }
+
+    .c_input {
+        background-color: #201E20;
+        border-top: 2px #201E20 solid;
+        border-left: 2px #201E20 solid;
+        border-right: 2px #201E20 solid;
+        border-bottom: 2px #DDC3A5 solid;
+        color: #DDC3A5;
+        height: 40px;
+        width: 500px;
+    }
+
+    .coloring {
+        color: #DDC3A5;
+    }
+
+    .active {
+        color: white;
+        border-bottom: 2px white solid;
+    }
+
+    a:hover {
+        color: #DDC3A5;
+        text-decoration: none;
+    }
+
+    .active:hover {
+        color: white;
+        border-bottom: 2px white solid;
+        text-decoration: none;
+
+    }
+</style>
+
+
+<a href="../EmployeeIndex" class="c btn" style="margin-left: 1100px;">Home</a>
+<div class="d-flex">
+
+    <a  href="loanPay?id=@Model.id&loanNb=1"  id="loan1"  class="coloring">First Loan</a>
+    <a  href="loanPay?id=@Model.id&loanNb=2"  id="loan2" class="coloring" style="margin-left:50px;">Second Loan</a>
+
+</div>
+<br>
+<br>
+
+@if(@Model.loan==null)
+{
+    <h1 class="coloring">no existing loan </h1>
+    <button type="submit" class="btn c">Go Back</button>
+}
+else{
+
+        <form  method="post">
+            <div style="display: flex;">
+                <div>
+                    <div class="form-group">
+                        <label asp-for="loan.LoanId" class="control-label" style="color: #DDC3A5;"></label>
+                        <br>
+                        <input class="c_input" value="@Model.loan.LoanId" disabled/>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="loan.Amount" class="control-label" style="color: #DDC3A5;"></label>
+                        <br>
+                        <input class="c_input" value="@Model.loan.Amount" disabled/>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="loan.LastPaidInstallment" class="control-label" style="color: #DDC3A5;"></label>
+                        <br>
+                        <input class="c_input" value="@(@Model.loan.LastPaidInstallment.Split(" ")[0])" disabled/>
+                    </div>
+                    <br>
+                </div>
+                <div style="margin-left:60px ;">
+                    <div class="form-group">
+                        <label asp-for="loan.PaidAmount" class="control-label" style="color: #DDC3A5;"></label>
+                        <br>
+                        <input class="c_input" value="@Model.loan.PaidAmount" disabled/>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label  class="control-label" style="color: #DDC3A5;">Remaining amount</label>
+                        <br>
+                        <input asp-for="afterPayAmount" class="c_input" disabled/>
+                    </div>
+
+                    <div class="form-group">
+                        
+                        <label class="control-label" style="color: #DDC3A5;">installment amount <span style="color:red;"> (@Model.added ) </span></label>
+                        <br>
+                        <input asp-for="payAmount" class="c_input" placeholder="Enter Email" />
+                        <br>
+                        <span asp-validation-for="payAmount" class="text-danger"></span>
+                    </div>
+
+                    <br />
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                </div>
+            </div>
+            <input type="number" asp-for="loanNb" id="loanNb" hidden>
+            <input type="number" asp-for="added" id="loanNb" hidden>
+            <input type="number" asp-for="@Model.loan.LoanId" value="@Model.loan.LoanId" hidden>
+            <button type="submit" class="btn c">Continue</button>
+        </form>
+
+}
+
+<br>
+
+@section scripts{
+<script>
+
+    let nb=$("#loanNb").val();
+
+    if(nb==1)
+        $("#loan1").addClass("active");
+    else
+        $("#loan2").addClass("active");
+
+</script>
+
+} 
