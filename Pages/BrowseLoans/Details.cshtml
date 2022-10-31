@@ -4,59 +4,230 @@
   ViewData["Title"] = "Home page";
 }
 <style>
-  body {
-    background-color: #201E20;
-  }
+    body {
+        background-color: #201E20;
+    }
+    
+    a:hover {
+        color: #DDC3A5;
+        text-decoration: none;
+    }
+    .coloring {
+        color: #DDC3A5;
+    }
+    .c {
+        color: #DDC3A5;
+        background-color: #201E20;
+        border-radius: 5px;
+        height: 40px;
+        border: 2px solid #DDC3A5;
+    }
 
-  .c {
-    color: #DDC3A5;
-    background-color: #201E20;
-    border-radius: 5px;
-    height: 40px;
-    border: 2px solid #DDC3A5;
-  }
+    .c:hover {
+        color: black;
+        background-color: #DDC3A5;
+        border-radius: 5px;
+        height: 40px;
+        border: 2px solid black;
+    }
 
-  .c:hover {
-    color: black;
-    background-color: #DDC3A5;
-    border-radius: 5px;
-    height: 40px;
-    border: 2px solid black;
-  }
+    .a {
+        margin-left: 20px;
+        color: red;
+        background-color: #201E20;
+        border-radius: 5px;
+        height: 40px;
+        border: 2px solid red;
+        padding: 5px;
 
-  .c:focus {
-    color: white;
-    background-color: #201E20;
-    border-radius: 5px;
-    height: 40px;
-    border: 2px solid black;
-  }
+    }
 
-  .c_input {
-    background-color: #201E20;
-    border-top: 2px #201E20 solid;
-    border-left: 2px #201E20 solid;
-    border-right: 2px #201E20 solid;
-    border-bottom: 2px #DDC3A5 solid;
-    color: #DDC3A5;
-    height: 40px;
-    width: 500px;
-  }
+    .a:hover {
+
+        color: black;
+        background-color: red;
+        border-radius: 5px;
+        height: 40px;
+        border: 2px solid black;
+    }
+
+    .c_input {
+        background-color: #201E20;
+        border-top: 2px #201E20 solid;
+        border-left: 2px #201E20 solid;
+        border-right: 2px #201E20 solid;
+        border-bottom: 2px #DDC3A5 solid;
+        color: #DDC3A5;
+        height: 40px;
+        width: 500px;
+
+    }
+
+    .c_input:focus {
+        background-color: #201E20;
+        border-top: 2px #201E20 solid;
+        border-left: 2px #201E20 solid;
+        border-right: 2px #201E20 solid;
+        border-bottom: 2px #DDC3A5 solid;
+        color: #DDC3A5;
+        height: 40px;
+        width: 500px;
+    }
+
+
+
+        .active {
+        color: white;
+        border-bottom: 2px white solid;
+    }
+
+    .active:hover {
+        color: white;
+        border-bottom: 2px white solid;
+        text-decoration: none;
+
+    }
+    
+    th{
+        background-color:  #DDC3A5;
+        color: black;
+
+    }
+    td{
+        background-color: #201E20;
+        color: #DDC3A5;
+        border-bottom: 2px solid #DDC3A5;
+
+    }
+    table{
+        border-left:2px  #DDC3A5 solid ;
+        border-right:2px  #DDC3A5 solid ;
+        border-radius: 12px 12px 0 0 ;
+    }
+
 </style>
-<a href="./EmployeeManagement" class="c btn" style="margin-left: 1100px;">Home</a>
 
+<a href="../AdminIndex" class="c btn" style="margin-left: 1100px;">Home</a>
 <br>
+
 <h2 style="color: #DDC3A5;">
   Details
 </h2>
 <br>
-<br>
-<div class="form-group">
-  <label class="control-label" style="color: #DDC3A5;">Name</label>
-  <label class="form-control c_input">@Model.employee.Name </label>
+
+<div class="d-flex">
+    <a id="old" href="#" class="coloring active">Info</a>
+    <a id="new" href="#" class="coloring" style="margin-left: 50px;">Installments</a>
 </div>
 <br>
-<div class="form-group">
-  <label class="control-label" style="color: #DDC3A5;">Password</label>
-  <label class="form-control c_input"> @Model.password</label>
+ 
+<div id="forms-list">
+    <div id="oldForm">
+      <div style="display: flex;">
+        <div>
+            <div class="form-group">
+                <label class="control-label" style="color: #DDC3A5;">Loan Id</label>
+                <br>
+                <input   class="c_input" asp-for="id" disabled>
+                <br>
+            </div>
+            <div class="form-group">
+                <label class="control-label" style="color: #DDC3A5;">Loan Date</label>
+                <br>
+                <input  class="c_input" asp-for="@Model.loan.LoanDate" disabled>
+                <br>
+            </div>
+            <div class="form-group">
+                <label class="control-label" style="color: #DDC3A5;">Loan Deadline</label>
+                <br>
+                <input  class="c_input" asp-for="@Model.loan.LoanDeadline" disabled>
+                <br>
+            </div>
+         
+        </div>
+
+        <div style="margin-left:60px ;">
+           <div class="form-control-custom">
+                <label  style="color: #DDC3A5;"> Amount</label><br>
+                <input  class="c_input" value="@Model.loan.Amount   @Model.loan.Currency" disabled>
+                <br>
+            </div>
+                <br>
+
+            <div class="form-control-custom">
+                <label  style="color: #DDC3A5;">Paid Amount</label><br>
+                <input  class="c_input" value="@Model.loan.PaidAmount   @Model.loan.Currency" disabled>
+                <br>
+            </div>
+            <br>
+           <div class="form-control-custom">
+                <label  style="color: #DDC3A5;"> AmountPaidPerInstallment</label><br>
+                <input  class="c_input" value="@Model.loan.AmountPaidPerInstallment   @Model.loan.Currency" disabled>
+                <br>
+            </div>
+                <br>
+        <div asp-validation-summary="ModelOnly" style="color:red ;"></div>
+        </div>
+
+    </div> 
+    </div>
+
+    <div id="newForm" style="width: 900px;">
+
+<table class="table" >
+    <thead>
+        <tr>
+            <th>
+                    id
+            </th>
+            <th>
+                   Paid amount
+            </th>
+            <th>
+                    Payment Date
+            </th>     
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.loan.PaidInstallments)
+        {
+            <tr>
+                <td>
+                    @item.id
+                </td>
+                <td>
+                    @item.amount                
+                </td>
+                <td >
+                    @item.PaymentDate   
+                 </td>
+            </tr>
+        }
+    </tbody>
+</table>      </span>
+    </div>
+
 </div>
+
+@section scripts{
+<script>
+    var adminForm = document.getElementById("newForm");
+    var hodForm = document.getElementById("oldForm");
+
+    adminForm.remove();
+    $("#new").on("click", function () {
+        this.classList.add("active");
+        $("#forms-list").append(adminForm);
+        hodForm.remove();
+        $("#old").removeClass("active");
+        buttonToggle();
+    })
+    $("#old").on("click", function () {
+        this.classList.add("active");
+        $("#forms-list").append(hodForm);
+        adminForm.remove();
+        $("#new").removeClass("active");
+    })
+
+</script>
+}

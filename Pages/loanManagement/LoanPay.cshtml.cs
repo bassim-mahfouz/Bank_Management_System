@@ -54,18 +54,27 @@ namespace Bank_Management_System.Pages.loanManagement
             loans=await _repository.GetLoansCustomerId(id);
             if(loanNb==1)
                 loan=loans[0];
-            else
-                loan=loans[1];
+            else{
+                if(loans.Count>1)
+                   loan=loans[1];
+                else
+                   loan=null;
+            }
+            if(loan!=null)
+            {
+
             payAmount=0;
             remaind=loan.Amount-loan.PaidAmount;
             afterPayAmount=loan.Amount-loan.PaidAmount;
 
-            if(remaind > loan.AmountPaidPerInstallment)
+            if(remaind >= loan.AmountPaidPerInstallment)
                 added="  it should be at least "+loan.AmountPaidPerInstallment;
-            else
+            else{
                 payAmount=remaind;
                 added="  last installement "+remaind;
+            }
             
+            }
             return Page();
         }
 

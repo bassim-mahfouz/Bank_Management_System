@@ -26,7 +26,12 @@ namespace Bank_Management_System.Repositories
         {
             return await _context.Loans.FirstOrDefaultAsync(a => a.LoanId==LoanId);
         }
-  
+
+        public async Task<List<PaidInstallment>> GetPaidInstallmentsByLoanId(int LoanId)
+        {
+            return await _context.PaidInstallment.Where(a => a.LoanId==LoanId).ToListAsync();
+        }
+
         public async Task<List<Loan>> GetLoans()
         {
             return await _context.Loans.ToListAsync();;

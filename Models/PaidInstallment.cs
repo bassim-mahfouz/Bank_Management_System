@@ -10,6 +10,8 @@ namespace Bank_Management_System.Models
     public class PaidInstallment
     {
 
+        [Key]
+        public int id{get;set;}
         [ForeignKey("Loan")]
         public int LoanId { get; set; }
         public Loan Loan { get; set; }

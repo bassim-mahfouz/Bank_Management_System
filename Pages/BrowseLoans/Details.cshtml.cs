@@ -9,7 +9,6 @@ using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Mvc;
 
-
 namespace Bank_Management_System.Pages.BrowseLoans
 {
     
@@ -17,25 +16,30 @@ namespace Bank_Management_System.Pages.BrowseLoans
 
     public class DetailsModel : PageModel
     {
-        public EmployeeRepository _repository{get;set;}
-
-        public Employee employee{get;set;}
-
-        public String? password{get;set;}
+        public LoanRepository _repository{get;set;}
 
         
         [BindProperty(SupportsGet=true)]
-        public String name{get;set;}
+        public int id{get;set;}
+
+        [BindProperty]
+        public int dateDifference {get;set;}
         
-        public DetailsModel(EmployeeRepository repository)
+        [BindProperty]
+        public Loan loan{get;set;}
+        
+        public DetailsModel(LoanRepository repository)
         {
             _repository=repository;
         }
 
        public async Task<IActionResult> OnGet()
         {
-            employee=await _repository.GetSingleEmployeeByName(name);
-            password=employee.Password;
+            loan=await _repository.GetLoanById(id);
+            DateTime Today=DateTime.Now;
+            DateTime LastPaid=DateTime.Parse(loan.LastPaidInstallment);
+            dateDifference=Convert.ToInt16(Today.Date.Subtract(LastPaid).Days);
+            loan.PaidInstallments=await _repository.GetPaidInstallmentsByLoanId(id);
             return Page();
         }
 
