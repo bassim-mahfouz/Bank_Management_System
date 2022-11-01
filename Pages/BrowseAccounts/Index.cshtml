@@ -81,44 +81,47 @@
     <thead>
         <tr>
             <th>
-                    ID
+                    AccountId
             </th>
             <th>
-                    remaid amount
+                    CustomerId
             </th>
             <th>
-                    Last Installement date
+                    Creation Date
+            </th>
+            <th>
+                    Balance 
+            </th>
+            <th>
+                    Currency 
             </th>
             <th>
             </th>
         </tr>
     </thead>
     <tbody>
-        @for(int i=0;i<@Model.Loans.Count;i++)
+        @foreach (var item in @Model.accounts)
         {
-            var item=@Model.Loans[i];
-            var cssStyle=@Model.cssClasses[i];
-            <tr class="@cssStyle">
+            <tr >
                 <td>
-                    @item.LoanId
+                    @item.AccountId
                 </td>
                 <td>
-                    @(@item.Amount-@item.PaidAmount)               
+                    @item.CustomerId              
                 </td>
                 <td>
-                    @item.LastPaidInstallment               
+                    @item.CreationDate               
+                </td>
+                <td>
+                    @item.Amount                
+                </td>
+                <td>
+                     @item.Currency
                 </td>
                 <td >
-                    <a asp-page="./Details" asp-route-id="@item.LoanId"  style="color: white ;"> <i class="bi bi-ticket-detailed"></i></a>
+                    <a asp-page="./Details" asp-route-id="@item.AccountId" asp-route-show=2 style="color: white ;"> <i class="bi bi-ticket-detailed"></i></a>
                 </td>
             </tr>
         }
     </tbody>
 </table>
-@section scripts{
-<script>
-
-
-</script>
-
-} 

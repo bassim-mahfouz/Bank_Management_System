@@ -26,7 +26,16 @@ namespace Bank_Management_System.Repositories
         {
             return await _context.Accounts.FirstOrDefaultAsync(a => a.AccountId==AccountId);
         }
-  
+
+        public async Task<List<Account>> GetAccounts()
+        {
+            return await _context.Accounts.ToListAsync();
+        }
+        
+        public async Task<List<Transaction>> GetTransactions(int id)
+        {
+            return await _context.Transactions.Where(a=> a.AccountId==id).ToListAsync();
+        }
 
         public async Task<bool> UpdateAccount(Account account)
         {

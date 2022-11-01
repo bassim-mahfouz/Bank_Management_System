@@ -25,8 +25,7 @@ namespace Bank_Management_System.Models
         public string  Currency{get;set;}
 
 
-        public List<Deposite> Deposites { get; set; }
-        public List<Withdraw> Withdraws { get; set; }
+        public List<Transaction> Transactions { get; set; }
         
         }
 }

@@ -64,38 +64,40 @@ namespace Bank_Management_System.Pages.TransactionsManagement
             account = await _repository.GetAccountByAccountId(AccountId);
 
             if(String.Compare(transactionType,"deposite")==0){
-                Deposite deposite=new Deposite();
+                Transaction deposite=new Transaction();
                 deposite.AccountId=AccountId;
                 deposite.amount=amount;
                 account.Amount=account.Amount+amount;
                 DateTime localDate = DateTime.Now;
+                deposite.type=1;
                 deposite.Date=localDate.ToString();
                 try
                 {
-                    account.Deposites.Add(deposite);
+                    account.Transactions.Add(deposite);
                 }
                 catch (System.Exception)
                 {
-                    account.Deposites=new List<Deposite>(){deposite};
+                    account.Transactions=new List<Transaction>(){deposite};
                 }
                 await _repository.UpdateAccount(account);
             }
 
             if(String.Compare(transactionType,"withdraw")==0){
 
-                Withdraw withdraw=new Withdraw();
+                Transaction withdraw=new Transaction();
                 withdraw.AccountId=AccountId;
                 withdraw.amount=amount;
                 account.Amount=account.Amount-amount;
                 DateTime localDate = DateTime.Now;
                 withdraw.Date=localDate.ToString();
+                withdraw.type=0;
                 try
                 {
-                    account.Withdraws.Add(withdraw);
+                    account.Transactions.Add(withdraw);
                 }
                 catch (System.Exception)
                 {
-                    account.Withdraws=new List<Withdraw>(){withdraw};
+                    account.Transactions=new List<Transaction>(){withdraw};
                 }
                 await _repository.UpdateAccount(account);
             }

@@ -22,6 +22,7 @@ namespace Bank_Management_System.Pages.BrowseLoans
         [BindProperty(SupportsGet=true)]
         public int id{get;set;}
 
+
         [BindProperty]
         public int dateDifference {get;set;}
         
