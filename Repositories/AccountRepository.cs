@@ -51,6 +51,12 @@ namespace Bank_Management_System.Repositories
             return true;
         }
 
+        public async Task<int> GetLastTransactionId()
+        {
+            return  _context.Transactions.Max(a => a.id);
+        }
+
+
 
     }
 }

@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+using Microsoft.AspNetCore.Http;
 
 namespace Bank_Management_System.Pages.loanManagement
 {
@@ -41,13 +42,18 @@ namespace Bank_Management_System.Pages.loanManagement
 
         public List<Loan> loans{get;set;}
 
+        public string Name{get;set;}
 
         public LoanRepository _repository{get;set;}
 
-        public LoanPayModel(LoanRepository repository)
+        public EmployeeRepository _employeeRepository{get;set;}
+
+        public LoanPayModel(LoanRepository repository,EmployeeRepository employeeRepository,IHttpContextAccessor _httpContextAccessor)
         {
             _repository=repository;
-        }
+            _employeeRepository=employeeRepository;
+            Name=_httpContextAccessor.HttpContext.User.Identity.Name;
+        }   
 
         public async Task<IActionResult> OnGet()
         {
@@ -75,6 +81,9 @@ namespace Bank_Management_System.Pages.loanManagement
             }
             
             }
+            Employee employee=await _employeeRepository.GetSingleEmployeeByName(Name);
+            employee.LastLoginDate=(DateTime.Now).ToString();
+            await _employeeRepository.UpdateEmployee(employee);
             return Page();
         }
 
@@ -97,6 +106,22 @@ namespace Bank_Management_System.Pages.loanManagement
                  changedLoan.PaidInstallments=new List<PaidInstallment>(){paidInstallment};
             }
             await _repository.UpdateLoan(changedLoan);
+            Employee employee=await _employeeRepository.GetSingleEmployeeByName(Name);
+            EmployeeAction action=new EmployeeAction();
+            action.type=0;
+            action.Date=(DateTime.Now).ToString();
+            action.ActionId= await _repository.GetLastIntstallementId();
+            employee.LastLoginDate=(DateTime.Now).ToString();
+            
+            try{
+                employee.Actions.Add(action);
+            }
+            catch
+            {
+                 employee.Actions=new List<EmployeeAction>(){action};
+            }
+            await _employeeRepository.UpdateEmployee(employee);
+
             return RedirectToPage("./LoanPay",new {id=changedLoan.CustomerId,loanNb=loanNb});
         }
          

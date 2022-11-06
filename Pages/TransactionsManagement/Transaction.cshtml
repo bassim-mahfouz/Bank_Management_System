@@ -24,35 +24,23 @@
         height: 40px;
         border: 2px solid black;
     }
-
-    .c_input {
-        background-color: #201E20;
-        border-top: 2px #201E20 solid;
-        border-left: 2px #201E20 solid;
-        border-right: 2px #201E20 solid;
-        border-bottom: 2px #DDC3A5 solid;
-        color: #DDC3A5;
-        height: 40px;
-        width: 500px;
-    }
     .withdrawStyle{
         background-color: #201E20;
-        border-top: 2px #201E20 solid;
-        border-left: 2px #201E20 solid;
-        border-right: 2px #201E20 solid;
-        border-bottom: 2px red solid;
+        border: 2px red solid;
         color: #DDC3A5;
     }
     
+    
     .depositeStyle {
         background-color: #201E20;
-        border-top: 2px #201E20 solid;
-        border-left: 2px #201E20 solid;
-        border-right: 2px #201E20 solid;
-        border-bottom: 2px blue solid;
+        border: 2px blue solid;
         color: #DDC3A5;
     }
-
+    .depositeStyle:focus{
+            background-color: #201E20;
+            border: 2px blue solid;
+            color: #DDC3A5;
+    }
     .coloring {
         color: #DDC3A5;
     }
@@ -93,14 +81,14 @@
             <div class="form-group">
                 <label class="control-label" style="color: #DDC3A5;">AccountId</label>
                 <br>
-                <input asp-for="account.AccountId" class="c_input" disabled>
+                <input asp-for="account.AccountId" class="readInput" disabled>
                 <input asp-for="AccountId" hidden>
                 <br>
             </div>
             <div class="form-group">
                 <label asp-for="account.Amount" class="control-label" style="color: #DDC3A5;"></label>
                 <br>
-                <input asp-for="account.Amount" id="balance" class="c_input" disabled/>
+                <input asp-for="account.Amount" id="balance" class="readInput" disabled/>
                 <input type="number" asp-for="account.Amount" id="balance" hidden>
             </div>
             <br>
@@ -110,22 +98,22 @@
 
             
                 <input type="radio" asp-for="transactionType" value="deposite" id="deposite" checked/> 
-                <label style="color: #DDC3A5; margin-left:30px;"> deposite</label>
+                <label style="color: #DDC3A5; margin-left:30px;" for="deposite"> deposite</label>
                 <br> 
                 <input type="radio" asp-for="transactionType" value="withdraw" id="withdraw" /> 
-                <label style="color: #DDC3A5; margin-left:30px;">withdraw </label>
+                <label style="color: #DDC3A5; margin-left:30px;" for="withdraw">withdraw </label>
                 <br> 
                 <input asp-for="operation" hidden>
             <br />
         </div>
         <div style="margin-left:40px;">
             <div class="form-group">
-                <label id="transactionlabel" style="color: #DDC3A5;">transaction amount</label>
+                <label  style="color: #DDC3A5;">transaction amount</label>
                 <input asp-for="amount" class="c_input" id="amount"/>
             </div>
             <div class="form-group">
                 <label style="color: #DDC3A5;">Amount after change</label>
-                <input   id="amountAfterChange" class="c_input" disabled/>
+                <input   id="amountAfterChange" class="readInput" disabled/>
             </div>
             <br>
             <br>
@@ -139,14 +127,14 @@
 @section scripts{
 <script>
     $("#amountAfterChange").val(0);
-    $('input').addClass('depositeStyle');
+    $('#amount').addClass('depositeStyle');
 
     $("#deposite").on("click", function () {
     $("#operation").val("+");
     $("#amount").val(0);
     $("#amountAfterChange").val(0);
-    $('input').addClass('depositeStyle');
-    $('input').removeClass('withdrawStyle');
+    $('#amount').addClass('depositeStyle');
+    $('#amount').removeClass('withdrawStyle');
 
     })
 
@@ -154,8 +142,8 @@
     $("#operation").val("-");
     $("#amount").val(0);
     $("#amountAfterChange").val(0);
-    $('input').addClass('withdrawStyle');
-    $('input').removeClass('depositeStyle');
+    $('#amount').addClass('withdrawStyle');
+    $('#amount').removeClass('depositeStyle');
 
     })
 

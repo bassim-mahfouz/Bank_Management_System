@@ -11,7 +11,9 @@ namespace Bank_Management_System.Models
     {
 
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int id{get;set;}
+        
         [ForeignKey("Loan")]
         public int LoanId { get; set; }
         public Loan Loan { get; set; }

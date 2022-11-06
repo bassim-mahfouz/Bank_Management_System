@@ -26,7 +26,11 @@ namespace Bank_Management_System.Repositories
         {
             return await _context.Employees.Where(a => a.Name == userName).ToListAsync();
         }
-        
+        public async Task<List<EmployeeAction>> GetEmployeeActions(string name)
+        {
+            return await _context.Actions.Where(a => a.EmployeeName == name).ToListAsync();
+        }
+
         public async Task<Employee> GetSingleEmployeeByName(string userName)
         {
             return await _context.Employees.FirstOrDefaultAsync(a => a.Name == userName);

@@ -8,6 +8,7 @@ using System;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Http;
 using System.Collections.Generic;
 
 namespace Bank_Management_System.Pages.TransactionsManagement
@@ -40,9 +41,16 @@ namespace Bank_Management_System.Pages.TransactionsManagement
 
         public AccountRepository _repository{get;set;}
 
-        public TransactionModel(AccountRepository repository)
+        public EmployeeRepository _employeeRepository{get;set;}
+
+        public string Name{get;set;}
+
+
+        public TransactionModel(AccountRepository repository,IHttpContextAccessor _httpContextAccessor,EmployeeRepository employeeRepository)
         {
+            _employeeRepository=employeeRepository;
             _repository=repository;
+            Name=_httpContextAccessor.HttpContext.User.Identity.Name;
         }
 
         public async Task<IActionResult> OnGet()
@@ -55,13 +63,18 @@ namespace Bank_Management_System.Pages.TransactionsManagement
             {
                  return RedirectToPage("./Message",new {id=id});
             }
-            
+            Employee employee=await _employeeRepository.GetSingleEmployeeByName(Name);
+            employee.LastLoginDate=(DateTime.Now).ToString();
+            await _employeeRepository.UpdateEmployee(employee);
+
             return Page();
         }
 
       public async Task<IActionResult> OnPost()
         {
             account = await _repository.GetAccountByAccountId(AccountId);
+            EmployeeAction action=new EmployeeAction();
+            action.Date=(DateTime.Now).ToString();
 
             if(String.Compare(transactionType,"deposite")==0){
                 Transaction deposite=new Transaction();
@@ -79,6 +92,9 @@ namespace Bank_Management_System.Pages.TransactionsManagement
                 {
                     account.Transactions=new List<Transaction>(){deposite};
                 }
+                action.type=1;
+                action.ActionId= await _repository.GetLastTransactionId();
+
                 await _repository.UpdateAccount(account);
             }
 
@@ -99,8 +115,22 @@ namespace Bank_Management_System.Pages.TransactionsManagement
                 {
                     account.Transactions=new List<Transaction>(){withdraw};
                 }
+                action.type=2;
+                action.ActionId= await _repository.GetLastTransactionId();
                 await _repository.UpdateAccount(account);
             }
+
+            Employee employee=await _employeeRepository.GetSingleEmployeeByName(Name);
+            employee.LastLoginDate=(DateTime.Now).ToString();
+            
+            try{
+                employee.Actions.Add(action);
+            }
+            catch
+            {
+                employee.Actions=new List<EmployeeAction>(){action};
+            }
+            await _employeeRepository.UpdateEmployee(employee);
 
             return RedirectToPage("./transaction",new {id=account.CustomerId});
 

@@ -13,12 +13,11 @@ namespace Bank_Management_System.Data
         public DbSet<Account> Accounts { get; set; }
         public DbSet<Transaction> Transactions { get; set; }
         public DbSet<Loan> Loans { get; set; }
+        public DbSet<EmployeeAction> Actions { get; set; }
         public DbSet<PaidInstallment> PaidInstallment { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            builder.Entity<PaidInstallment>().HasKey(table => new { table.LoanId, table.PaymentDate });
-
             base.OnModelCreating(builder);
         }
     }

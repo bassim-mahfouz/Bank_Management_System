@@ -59,7 +59,7 @@
 <div class="d-flex justify-content-between" style="margin-top: 20px;">
     <form method="post">
     <div> 
-        <input asp-for="name" placeholder="search by name" class="c_input">
+        <input asp-for="name" placeholder="search by name" class="c_input" style="width: 200px;">
         <button type="submit" class="btn c" style="width: 100px;">Search</button>
     </div>
     </form>
@@ -79,7 +79,7 @@
                     Name
             </th>
             <th>
-                    Password
+                    Last Login Date
             </th>
             <th>
             </th>
@@ -93,7 +93,7 @@
                     @item.Name
                 </td>
                 <td>
-                    @item.Password                
+                    @item.LastLoginDate                
                 </td>
                 <td class="d-flex justify-content-around">
                     <a asp-page="./Details" asp-route-name="@item.Name"><i class="bi bi-ticket-detailed"></i></a>|

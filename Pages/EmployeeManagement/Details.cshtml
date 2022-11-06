@@ -4,59 +4,98 @@
   ViewData["Title"] = "Home page";
 }
 <style>
-  body {
-    background-color: #201E20;
-  }
+  body{
+      background-color: #201E20;
+      color: white;
+    }      
 
-  .c {
-    color: #DDC3A5;
-    background-color: #201E20;
-    border-radius: 5px;
-    height: 40px;
-    border: 2px solid #DDC3A5;
-  }
+    .c{
+      color:#DDC3A5;
+      background-color: #201E20;
+      border-radius: 5px;
+      height: 40px;
+      border: 2px solid #DDC3A5;
+    }
+    .c:hover{
+      color:black;
+      background-color: #DDC3A5;
+      border-radius: 5px;
+      height: 40px;
+      border: 2px solid black;
+    }
+   
+    th{
+        background-color:  #DDC3A5;
+        color: black;
 
-  .c:hover {
-    color: black;
-    background-color: #DDC3A5;
-    border-radius: 5px;
-    height: 40px;
-    border: 2px solid black;
-  }
+    }
+    td{
+        background-color: #201E20;
+        color: #DDC3A5;
+        border-bottom: 2px solid #DDC3A5;
 
-  .c:focus {
-    color: white;
-    background-color: #201E20;
-    border-radius: 5px;
-    height: 40px;
-    border: 2px solid black;
-  }
-
-  .c_input {
-    background-color: #201E20;
-    border-top: 2px #201E20 solid;
-    border-left: 2px #201E20 solid;
-    border-right: 2px #201E20 solid;
-    border-bottom: 2px #DDC3A5 solid;
-    color: #DDC3A5;
-    height: 40px;
-    width: 500px;
-  }
+    }
+    table{
+        border-left:2px  #DDC3A5 solid ;
+        border-right:2px  #DDC3A5 solid ;
+        border-radius: 12px 12px 0 0 ;
+    }
+        .download{
+        transform: translateY(50px);
+    }
+    .tableTr{
+        transform: translateY(-30px);
+    }
 </style>
-<a href="./EmployeeManagement" class="c btn" style="margin-left: 1100px;">Home</a>
-
+<a href="../EmployeeManagement" class="c btn" style="margin-left: 1035px;" >Home</a>
+<br>
+<a  asp-page="./Details" asp-page-handler="Download" asp-route-name="@Model.name" class="c btn download" style="margin-left: 1000px;" >Download</a>
 <br>
 <h2 style="color: #DDC3A5;">
-  Details
+  @Model.employee.Name
 </h2>
 <br>
 <br>
-<div class="form-group">
-  <label class="control-label" style="color: #DDC3A5;">Name</label>
-  <label class="form-control c_input">@Model.employee.Name </label>
-</div>
-<br>
-<div class="form-group">
-  <label class="control-label" style="color: #DDC3A5;">Password</label>
-  <label class="form-control c_input"> @Model.password</label>
+<div style="width: 1000px;">
+<table class="table tableTr"  >
+    <thead>
+        <tr>
+            <th>
+                    Action Type
+            </th>
+            <th>
+                    Id
+            </th>
+            <th>
+                    Date
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.actions)
+        {
+            <tr>
+                <td>
+                @if( @item.type==0){
+                  <span>Loan Installment</span>
+                }
+                @if(@item.type==1)
+                {
+                  <span>Deposite</span>
+                }
+                @if(@item.type==2)
+                {
+                  <span>Withdraw</span>
+                }
+                </td>
+                <td>
+                    @item.ActionId                
+                </td>
+                <td>
+                    @item.Date
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
 </div>

@@ -102,6 +102,9 @@ namespace Bank_Management_System.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
+                    b.Property<string>("LastLoginDate")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Password")
                         .HasMaxLength(128)
                         .HasColumnType("nvarchar(128)");
@@ -109,6 +112,32 @@ namespace Bank_Management_System.Migrations
                     b.HasKey("Name");
 
                     b.ToTable("Employees");
+                });
+
+            modelBuilder.Entity("Bank_Management_System.Models.EmployeeAction", b =>
+                {
+                    b.Property<int>("id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("ActionId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Date")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("EmployeeName")
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<int>("type")
+                        .HasColumnType("int");
+
+                    b.HasKey("id");
+
+                    b.HasIndex("EmployeeName");
+
+                    b.ToTable("Actions");
                 });
 
             modelBuilder.Entity("Bank_Management_System.Models.Loan", b =>
@@ -153,19 +182,24 @@ namespace Bank_Management_System.Migrations
 
             modelBuilder.Entity("Bank_Management_System.Models.PaidInstallment", b =>
                 {
+                    b.Property<int>("id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
                     b.Property<int>("LoanId")
                         .HasColumnType("int");
 
                     b.Property<string>("PaymentDate")
-                        .HasColumnType("nvarchar(450)");
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<float>("amount")
                         .HasColumnType("real");
 
-                    b.Property<int>("id")
-                        .HasColumnType("int");
+                    b.HasKey("id");
 
-                    b.HasKey("LoanId", "PaymentDate");
+                    b.HasIndex("LoanId");
 
                     b.ToTable("PaidInstallment");
                 });
@@ -205,6 +239,15 @@ namespace Bank_Management_System.Migrations
                         .IsRequired();
 
                     b.Navigation("Customer");
+                });
+
+            modelBuilder.Entity("Bank_Management_System.Models.EmployeeAction", b =>
+                {
+                    b.HasOne("Bank_Management_System.Models.Employee", "Employee")
+                        .WithMany("Actions")
+                        .HasForeignKey("EmployeeName");
+
+                    b.Navigation("Employee");
                 });
 
             modelBuilder.Entity("Bank_Management_System.Models.Loan", b =>
@@ -250,6 +293,11 @@ namespace Bank_Management_System.Migrations
                     b.Navigation("Loans");
 
                     b.Navigation("PersonalAccount");
+                });
+
+            modelBuilder.Entity("Bank_Management_System.Models.Employee", b =>
+                {
+                    b.Navigation("Actions");
                 });
 
             modelBuilder.Entity("Bank_Management_System.Models.Loan", b =>

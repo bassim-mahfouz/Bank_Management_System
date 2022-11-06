@@ -95,32 +95,6 @@
         height: 40px;
         border: 2px solid black;
     }
-
-    .c_input {
-        background-color: #201E20;
-        border-top: 2px #201E20 solid;
-        border-left: 2px #201E20 solid;
-        border-right: 2px #201E20 solid;
-        border-bottom: 2px #DDC3A5 solid;
-        color: #DDC3A5;
-        height: 40px;
-        width: 500px;
-
-    }
-
-    .c_input:focus {
-        background-color: #201E20;
-        border-top: 2px #201E20 solid;
-        border-left: 2px #201E20 solid;
-        border-right: 2px #201E20 solid;
-        border-bottom: 2px #DDC3A5 solid;
-        color: #DDC3A5;
-        height: 40px;
-        width: 500px;
-    }
-
-
-
         .active {
         color: white;
         border-bottom: 2px white solid;
@@ -149,10 +123,17 @@
         border-right:2px  #DDC3A5 solid ;
         border-radius: 12px 12px 0 0 ;
     }
+    .download{
+        transform: translateY(-40px);
+    }
+    .tableTr{
+        transform: translateY(-30px);
+    }
 
 </style>
 
 <a href="../AdminIndex" class="c btn" style="margin-left: 1100px;">Home</a>
+
 <br>
 
 <h3 style="color: #DDC3A5;">
@@ -162,11 +143,11 @@
 <a href="./Details?id=@Model.id&show=1" class="deposite btn" > <i class="bi bi-graph-up-arrow" style="color: blue;"></i></a>
 <a href="./Details?id=@Model.id&show=0" class="withdraw btn" > <i class="bi bi-graph-down-arrow" style="color :red;"></i></a>
 <a href="./Details?id=@Model.id&show=2" class="both btn" > <i class="bi bi-arrow-down-up" style="color :white;"></i></a>
-
+<a  asp-page="./Details" asp-page-handler="Download" asp-route-id="@Model.id" asp-route-show="@Model.show" class="c btn download" style="margin-left: 1000px;" >Download</a>
 <br>
 <br>
 <div style="width: 1000px;">
-<table class="table" >
+<table class="table tableTr" >
     <thead>
         <tr>
             <th>

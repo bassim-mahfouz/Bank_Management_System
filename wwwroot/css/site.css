@@ -410,3 +410,22 @@ ul.nav.nav-tabs {
   --clr-orange-10: hsl(13, 73%, 16%);
 }
 
+.c_input {
+  border-radius: 5px;
+  background-color: #201E20;
+  border: 2px #DDC3A5 solid;
+  color: #DDC3A5;
+  height: 45px;
+  width: 500px;
+}
+.readInput{
+  border-radius: 5px;
+  background-color: #201E20;
+  border-bottom: 2px #DDC3A5 solid;
+  border-left: 2px #201E20 solid;
+  border-right: 2px #201E20 solid;
+  border-top: 2px #201E20 solid;
+  color: #DDC3A5;
+  height: 45px;
+  width: 500px;
+}

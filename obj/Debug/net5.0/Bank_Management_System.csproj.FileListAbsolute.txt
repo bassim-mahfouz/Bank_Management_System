@@ -101,3 +101,10 @@ C:\Users\hp\Desktop\Bank_Management_System\obj\Debug\net5.0\Razor\Pages\BrowseLo
 C:\Users\hp\Desktop\Bank_Management_System\obj\Debug\net5.0\Razor\Pages\BrowseLoans\Index.cshtml.g.cs
 C:\Users\hp\Desktop\Bank_Management_System\obj\Debug\net5.0\Razor\Pages\BrowseAccounts\Details.cshtml.g.cs
 C:\Users\hp\Desktop\Bank_Management_System\obj\Debug\net5.0\Razor\Pages\BrowseAccounts\Index.cshtml.g.cs
+C:\Users\hp\Desktop\Bank_Management_System\bin\Debug\net5.0\ClosedXML.dll
+C:\Users\hp\Desktop\Bank_Management_System\bin\Debug\net5.0\DocumentFormat.OpenXml.dll
+C:\Users\hp\Desktop\Bank_Management_System\bin\Debug\net5.0\ExcelNumberFormat.dll
+C:\Users\hp\Desktop\Bank_Management_System\bin\Debug\net5.0\Irony.dll
+C:\Users\hp\Desktop\Bank_Management_System\bin\Debug\net5.0\SixLabors.Fonts.dll
+C:\Users\hp\Desktop\Bank_Management_System\bin\Debug\net5.0\System.IO.Packaging.dll
+C:\Users\hp\Desktop\Bank_Management_System\bin\Debug\net5.0\XLParser.dll

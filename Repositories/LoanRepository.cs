@@ -51,6 +51,11 @@ namespace Bank_Management_System.Repositories
             return true;
         }
 
+        public async Task<int> GetLastIntstallementId()
+        {
+            return  _context.PaidInstallment.Max(a => a.LoanId);
+        }
+
 
     }
 }

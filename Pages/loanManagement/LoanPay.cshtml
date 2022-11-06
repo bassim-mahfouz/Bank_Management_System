@@ -26,17 +26,6 @@
         border: 2px solid black;
     }
 
-    .c_input {
-        background-color: #201E20;
-        border-top: 2px #201E20 solid;
-        border-left: 2px #201E20 solid;
-        border-right: 2px #201E20 solid;
-        border-bottom: 2px #DDC3A5 solid;
-        color: #DDC3A5;
-        height: 40px;
-        width: 500px;
-    }
-
     .coloring {
         color: #DDC3A5;
     }
@@ -82,19 +71,19 @@ else{
                     <div class="form-group">
                         <label asp-for="loan.LoanId" class="control-label" style="color: #DDC3A5;"></label>
                         <br>
-                        <input class="c_input" value="@Model.loan.LoanId" disabled/>
+                        <input class="readInput" value="@Model.loan.LoanId" disabled/>
                     </div>
 
                     <div class="form-group">
                         <label asp-for="loan.Amount" class="control-label" style="color: #DDC3A5;"></label>
                         <br>
-                        <input class="c_input" value="@Model.loan.Amount" disabled/>
+                        <input class="readInput" id="amount" value="@Model.loan.Amount" disabled/>
                     </div>
 
                     <div class="form-group">
                         <label asp-for="loan.LastPaidInstallment" class="control-label" style="color: #DDC3A5;"></label>
                         <br>
-                        <input class="c_input" value="@(@Model.loan.LastPaidInstallment.Split(" ")[0])" disabled/>
+                        <input class="readInput" value="@(@Model.loan.LastPaidInstallment.Split(" ")[0])" disabled/>
                     </div>
                     <br>
                 </div>
@@ -102,20 +91,20 @@ else{
                     <div class="form-group">
                         <label asp-for="loan.PaidAmount" class="control-label" style="color: #DDC3A5;"></label>
                         <br>
-                        <input class="c_input" value="@Model.loan.PaidAmount" disabled/>
+                        <input class="readInput" id="paidAmount" value="@Model.loan.PaidAmount" disabled/>
                     </div>
                     
                     <div class="form-group">
                         <label  class="control-label" style="color: #DDC3A5;">Remaining amount</label>
                         <br>
-                        <input asp-for="afterPayAmount" class="c_input" disabled/>
+                        <input asp-for="afterPayAmount" id="remaing" class="readInput" disabled/>
                     </div>
 
                     <div class="form-group">
                         
                         <label class="control-label" style="color: #DDC3A5;">installment amount <span style="color:red;"> (@Model.added ) </span></label>
                         <br>
-                        <input asp-for="payAmount" class="c_input" placeholder="Enter Email" />
+                        <input asp-for="payAmount" id="installmentAmount" class="c_input" placeholder="Enter Email" />
                         <br>
                         <span asp-validation-for="payAmount" class="text-danger"></span>
                     </div>
@@ -143,6 +132,22 @@ else{
         $("#loan1").addClass("active");
     else
         $("#loan2").addClass("active");
+
+    $("#installmentAmount").keyup(function(){
+        if( $("#installmentAmount").val()<0)
+        {
+            alert("the installment amount should not be negative");
+            $("#installmentAmount").val(0)
+            return;
+        }
+        if( $("#installmentAmount").val()> $("#remaing").val())
+        {
+            alert("You pass the Loan amount");
+            $("#installmentAmount").val(0)
+        }
+    })
+
+    
 
 </script>
 

@@ -7,7 +7,11 @@ using System.Collections.Generic;
 using Bank_Management_System.Repositories;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using System.IO;
 using System;
+using ClosedXML;
+using ClosedXML.Excel;
+
 
 namespace Bank_Management_System.Pages.BrowseLoans
 {
@@ -75,6 +79,59 @@ namespace Bank_Management_System.Pages.BrowseLoans
             }
             return Page();
         } 
+
+        public async Task<IActionResult>  OnGetDownload()
+        {
+            Loans= await _repository.GetLoans();
+
+            string contentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+            string fileName = "Loans.xlsx";
+            try
+                {
+                 using (var workbook = new XLWorkbook())
+                {
+                     IXLWorksheet worksheet =
+                    workbook.Worksheets.Add("Loans");
+                    worksheet.Cell(1, 1).Value = "Loan Id";
+                    worksheet.Cell(1, 2).Value = "Customer Id";
+                    worksheet.Cell(1, 3).Value = "Amount";
+                    worksheet.Cell(1, 4).Value = "PaidAmount";
+                    worksheet.Cell(1, 5).Value = "LoanDate";
+                    worksheet.Cell(1, 6).Value = "Currency";
+                    worksheet.Cell(1, 7).Value = "LastPaidInstallment";
+                    worksheet.Cell(1, 8).Value = "LoanDeadline";
+                    worksheet.Cell(1, 9).Value = "AmountPaidPerInstallment";
+                    int index=1;
+                    foreach (var loan in Loans)
+                    {
+                        worksheet.Cell(1 + index, 1).Value =loan.LoanId;
+                        worksheet.Cell(1 + index, 2).Value =loan.CustomerId;
+                        worksheet.Cell(1 + index, 3).Value =loan.Amount;                        
+                        worksheet.Cell(1 + index, 4).Value =loan.PaidAmount;                        
+                        worksheet.Cell(1 + index, 5).Value =loan.LoanDate.Split(" ")[0];                        
+                        worksheet.Cell(1 + index, 6).Value =loan.Currency;                        
+                        worksheet.Cell(1 + index, 7).Value =loan.LastPaidInstallment;                        
+                        worksheet.Cell(1 + index, 8).Value =loan.LoanDeadline;                        
+                        worksheet.Cell(1 + index, 9).Value =loan.AmountPaidPerInstallment;                        
+                        index++;
+                    }
+                 
+                    using (var stream = new MemoryStream())
+                    {
+                        workbook.SaveAs(stream);
+                        var content = stream.ToArray();
+                        return File(content, contentType, fileName);
+                    }
+             }
+         }
+            catch (IOException ioException)
+            {
+                return Page();
+            }
+
+            
+        } 
+
 
 
     }

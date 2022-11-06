@@ -16,5 +16,9 @@ namespace Bank_Management_System.Models
         [RegularExpression(@"^((?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*\W)).+$", ErrorMessage = "Password should contain numbers, symbols, and characters")]
         [MaxLength(128)]
         public string Password { get; set; }
+
+        public string LastLoginDate{get;set;}
+
+        public List<EmployeeAction> Actions{get;set;}
     }
 }
