@@ -44,10 +44,6 @@ namespace Bank_Management_System.Pages.BrowseLoans
             return Page();
         }
 
- 
-    
-
-
     }
     
 }

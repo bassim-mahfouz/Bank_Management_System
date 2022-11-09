@@ -31,7 +31,7 @@ namespace Bank_Management_System.Pages.loanManagement
         [BindProperty]
         public float payAmount{get;set;}
         
-        [BindProperty]
+        [BindProperty(SupportsGet=true)]
         public float afterPayAmount{get;set;}
 
         [BindProperty]
@@ -70,14 +70,13 @@ namespace Bank_Management_System.Pages.loanManagement
             {
 
             payAmount=0;
-            remaind=loan.Amount-loan.PaidAmount;
             afterPayAmount=loan.Amount-loan.PaidAmount;
 
-            if(remaind >= loan.AmountPaidPerInstallment)
+            if(afterPayAmount >= loan.AmountPaidPerInstallment)
                 added="  it should be at least "+loan.AmountPaidPerInstallment;
             else{
-                payAmount=remaind;
-                added="  last installement "+remaind;
+                payAmount=afterPayAmount;
+                added="  last installement "+afterPayAmount;
             }
             
             }

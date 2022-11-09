@@ -29,7 +29,7 @@ namespace Bank_Management_System.Pages.BrowseLoans
        public int id{get;set;}
 
        public string cssClass{get;set;}
-
+ 
 
        public IndexModel(LoanRepository repository)
        {
@@ -38,6 +38,25 @@ namespace Bank_Management_System.Pages.BrowseLoans
 
        public async Task<IActionResult>  OnGet()
         {
+            cssClasses=new List<String>(){};
+            Loans= await _repository.GetLoans();
+            DateTime Today=DateTime.Now;
+            
+            foreach(var loan in Loans)
+            {
+                DateTime LastPaid=DateTime.Parse(loan.LastPaidInstallment);
+                if(Convert.ToInt16(Today.Date.Subtract(LastPaid).Days)>30)
+                {
+                    cssClasses.Add("coloring");
+                }
+                else
+                    cssClasses.Add(" ");
+            }
+            return Page();
+        } 
+        public async Task<IActionResult>  OnGetDelete()
+        {
+            await _repository.DeleteLoans(id);
             cssClasses=new List<String>(){};
             Loans= await _repository.GetLoans();
             DateTime Today=DateTime.Now;
@@ -78,7 +97,9 @@ namespace Bank_Management_System.Pages.BrowseLoans
                     cssClasses.Add(" ");
             }
             return Page();
-        } 
+        }
+
+
 
         public async Task<IActionResult>  OnGetDownload()
         {

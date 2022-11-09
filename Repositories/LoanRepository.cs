@@ -56,6 +56,18 @@ namespace Bank_Management_System.Repositories
             return  _context.PaidInstallment.Max(a => a.LoanId);
         }
 
+        public async Task DeleteLoans(int LoanId)
+        {
+            var loan = await _context.Loans.FirstOrDefaultAsync(a => a.LoanId==LoanId);
+
+            if (loan != null)
+            {
+                _context.Loans.Remove(loan);
+                await _context.SaveChangesAsync();
+            }
+        }
+
+        
 
     }
 }

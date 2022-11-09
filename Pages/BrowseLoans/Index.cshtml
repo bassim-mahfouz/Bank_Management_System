@@ -55,7 +55,7 @@
     .tableTr{
         transform: translateY(-30px);
     }
-        .c_input{
+    .c_input{
               background-color: #201E20;
               border-top: 2px #201E20 solid;
               border-left: 2px #201E20 solid;
@@ -111,8 +111,15 @@
                 <td>
                     @item.LastPaidInstallment               
                 </td>
-                <td >
-                    <a asp-page="./Details" asp-route-id="@item.LoanId"  style="color: white ;"> <i class="bi bi-ticket-detailed"></i></a>
+                <td>
+            
+                    <a asp-page="./Details" asp-route-id="@item.LoanId"  style="color: white ;"> <i class="bi bi-ticket-detailed"></i></a> 
+                    @if((@item.Amount-@item.PaidAmount)==0){
+                    <span style="margin:20px;">|</span>
+
+                    <a asp-page="./index" asp-page-handler="Delete" asp-route-id="@item.LoanId"><i class="bi bi-trash" style="color:red ;"></i></a> 
+                    
+                    }     
                 </td>
             </tr>
         }

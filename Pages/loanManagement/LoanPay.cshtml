@@ -65,6 +65,60 @@
 }
 else{
 
+    @if(@Model.afterPayAmount==0)
+    {
+            <h4 style="color:red ;">The loan is fully refunded</h4>
+
+           <div style="display: flex;">
+                <div>
+                    <div class="form-group">
+                        <label asp-for="loan.LoanId" class="control-label" style="color: #DDC3A5;"></label>
+                        <br>
+                        <input class="readInput" value="@Model.loan.LoanId" disabled/>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="loan.Amount" class="control-label" style="color: #DDC3A5;"></label>
+                        <br>
+                        <input class="readInput" id="amount" value="@Model.loan.Amount" disabled/>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="loan.LastPaidInstallment" class="control-label" style="color: #DDC3A5;"></label>
+                        <br>
+                        <input class="readInput" value="@(@Model.loan.LastPaidInstallment.Split(" ")[0])" disabled/>
+                    </div>
+                    <br>
+                </div>
+                <div style="margin-left:60px ;">
+                    <div class="form-group">
+                        <label asp-for="loan.PaidAmount" class="control-label" style="color: #DDC3A5;"></label>
+                        <br>
+                        <input class="readInput" id="paidAmount" value="@Model.loan.PaidAmount" disabled/>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label  class="control-label" style="color: #DDC3A5;">Remaining amount</label>
+                        <br>
+                        <input class="readInput" disabled value="@Model.afterPayAmount"/>
+                        <input asp-for="afterPayAmount" id="remaing"  hidden/>
+                    </div>
+
+                    <div class="form-group">
+                        
+                        <label class="control-label" style="color: #DDC3A5;">installment amount <span style="color:red;"> (@Model.added ) </span></label>
+                        <br>
+                        <input asp-for="payAmount" class="readInput" id="installmentAmount" class="c_input" placeholder="Installment Amount" disabled />
+                        <br>
+                        <span asp-validation-for="payAmount" class="text-danger"></span>
+                    </div>
+
+                    <br />
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                </div>
+            </div>
+    }
+    else{
         <form  method="post">
             <div style="display: flex;">
                 <div>
@@ -97,14 +151,15 @@ else{
                     <div class="form-group">
                         <label  class="control-label" style="color: #DDC3A5;">Remaining amount</label>
                         <br>
-                        <input asp-for="afterPayAmount" id="remaing" class="readInput" disabled/>
+                        <input class="readInput" disabled value="@Model.afterPayAmount"/>
+                        <input asp-for="afterPayAmount" id="remaing"  hidden/>
                     </div>
 
                     <div class="form-group">
                         
                         <label class="control-label" style="color: #DDC3A5;">installment amount <span style="color:red;"> (@Model.added ) </span></label>
                         <br>
-                        <input asp-for="payAmount" id="installmentAmount" class="c_input" placeholder="Enter Email" />
+                        <input asp-for="payAmount" id="installmentAmount" class="c_input" placeholder="Installment Amount" />
                         <br>
                         <span asp-validation-for="payAmount" class="text-danger"></span>
                     </div>
@@ -118,6 +173,9 @@ else{
             <input type="number" asp-for="@Model.loan.LoanId" value="@Model.loan.LoanId" hidden>
             <button type="submit" class="btn c">Continue</button>
         </form>
+
+    }
+
 
 }
 
@@ -134,13 +192,13 @@ else{
         $("#loan2").addClass("active");
 
     $("#installmentAmount").keyup(function(){
-        if( $("#installmentAmount").val()<0)
+        if( parseInt($("#installmentAmount").val())<0)
         {
             alert("the installment amount should not be negative");
             $("#installmentAmount").val(0)
             return;
         }
-        if( $("#installmentAmount").val()> $("#remaing").val())
+        if( parseInt($("#installmentAmount").val())> parseInt($("#remaing").val()))
         {
             alert("You pass the Loan amount");
             $("#installmentAmount").val(0)
