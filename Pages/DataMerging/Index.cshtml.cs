@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
+using Bank_Management_System.Services;
 
 namespace Bank_Management_System.Pages.DataMerging
 {
@@ -22,7 +23,7 @@ namespace Bank_Management_System.Pages.DataMerging
 
         [BindProperty]
         [Required(ErrorMessage = "no file choosed")]
-        public IFormFile file { get; set; }
+        public IFormFile file { get; set; } 
 
         public int choose {get;set;}
 
@@ -119,74 +120,17 @@ namespace Bank_Management_System.Pages.DataMerging
                 }
 
             }
-            InsertCSVRecords(tblcsv);
             
             choose = 1; 
+
+            DataMergingService.InsertCSVRecords(tblcsv);
             
-        }
-        private void InsertCSVRecords(DataTable csvdt)
-        {
-
-            connection();
-
-            SqlBulkCopy objbulk = new SqlBulkCopy(con);
-
-            objbulk.DestinationTableName = "Customers";
-            objbulk.ColumnMappings.Add("Id", "Id");
-            objbulk.ColumnMappings.Add("FirstName", "FirstName");
-            objbulk.ColumnMappings.Add("LastName", "LastName");
-            objbulk.ColumnMappings.Add("PhoneNumber", "PhoneNumber");
-            objbulk.ColumnMappings.Add("Email", "Email");
-            objbulk.ColumnMappings.Add("Password", "Password");
-
-            con.Open();
-
-            objbulk.WriteToServer(csvdt);
-
-
-            con.Close();
-        }
-
-
-        public void Savefile(IFormFile formFile)
-        {
-
-
-            var filePath = Path.Combine(formFile.FileName);
-
-            using (var fileStream = new FileStream(filePath, FileMode.Create))
-            {
-                formFile.CopyToAsync(fileStream);
-                fileStream.Close();
-            }
-
             
         }
 
-        public void fun(IFormFile formFile)
-        {
-            System.Text.Encoding.RegisterProvider(System.Text.CodePagesEncodingProvider.Instance);
-            using (var stream = new MemoryStream())
-            {
-                file.CopyTo(stream);
-                stream.Position = 0;
-                using(var reader = new StreamReader(stream))
-                {
 
-                    while (!reader.EndOfStream)
-                    {
-                        var line = reader.ReadLine();
-                        Console.WriteLine(line);
-                        var values = line.Split(';');
 
-                        
-                    }
 
-                }
-
-            }
-
-        }
 
 
     }

@@ -108,3 +108,4 @@ C:\Users\hp\Desktop\Bank_Management_System\bin\Debug\net5.0\Irony.dll
 C:\Users\hp\Desktop\Bank_Management_System\bin\Debug\net5.0\SixLabors.Fonts.dll
 C:\Users\hp\Desktop\Bank_Management_System\bin\Debug\net5.0\System.IO.Packaging.dll
 C:\Users\hp\Desktop\Bank_Management_System\bin\Debug\net5.0\XLParser.dll
+C:\Users\hp\Desktop\Bank_Management_System\obj\Debug\net5.0\Razor\Pages\Loans\Message.cshtml.g.cs

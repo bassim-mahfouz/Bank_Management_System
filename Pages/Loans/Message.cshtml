@@ -1,0 +1,61 @@
+@page
+@model MessageModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+
+
+<style>
+    body {
+        background-color: #201E20;
+    }
+
+    .c {
+        color: #DDC3A5;
+        background-color: #201E20;
+        border-radius: 5px;
+        height: 40px;
+        border: 2px solid #DDC3A5;
+    }
+
+    .c:hover {
+        color: black;
+        background-color: #DDC3A5;
+        border-radius: 5px;
+        height: 40px;
+        border: 2px solid black;
+    }
+
+    .coloring {
+        color: #DDC3A5;
+    }
+
+    .active {
+        color: white;
+        border-bottom: 2px white solid;
+    }
+
+    a:hover {
+        color: #DDC3A5;
+        text-decoration: none;
+    }
+
+    .active:hover {
+        color: white;
+        border-bottom: 2px white solid;
+        text-decoration: none;
+
+    }
+</style>
+
+<a href="../AdminIndex" class="c btn" style="margin-left: 1100px;" >Home</a>
+
+<h3 class="coloring">Message :</h3>
+<br>
+<div class="d-flex">
+  <h4 style="color:red;">This Customer Have Two Loans !!</h1>
+</div>
+<br>
+
+

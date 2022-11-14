@@ -10,6 +10,7 @@ using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Bank_Management_System.Services;
 
 
 namespace Bank_Management_System.Pages.Loans
@@ -20,6 +21,8 @@ namespace Bank_Management_System.Pages.Loans
     public class CreateModel : PageModel
     {
         public CustomerRepository _repository{get;set;}
+
+        public LoanRepository _loanRepository{get;set;}
 
         [BindProperty(SupportsGet=true)]
         public int id{get;set;}
@@ -36,19 +39,36 @@ namespace Bank_Management_System.Pages.Loans
 
         public List<SelectListItem> correncyList  {get;set;}
 
-        public CreateModel(CustomerRepository repository)
+        public CreateModel(CustomerRepository repository,LoanRepository loanRepository)
         {
             _repository=repository;
+            _loanRepository=loanRepository;
         }  
        
        public async Task<IActionResult> OnGet()
         {
-            correncyList = new()
+            correncyList = Currency.getCurrencyList();
+            
+            int count;
+            List<Loan> list= await _loanRepository.GetLoansCustomerId(id);
+            try
             {
-                new SelectListItem { Value = "LB", Text = "LB (not recomended)" , Selected = true},
-                new SelectListItem { Value = "USD", Text = "USD" },
-                new SelectListItem { Value = "EURO", Text = "EURO" },
-            };
+                count=list.Count;
+                Console.WriteLine("1--"+count);
+
+            }
+            catch (System.Exception)
+            {
+                count=0;
+            }
+            
+            Console.WriteLine("2--"+count);
+
+            if(count==2)
+            {
+                return RedirectToPage("./Message");
+            }
+
             return Page();
         }
 
@@ -56,12 +76,8 @@ namespace Bank_Management_System.Pages.Loans
 
         public async Task<IActionResult> OnPostAsync(){
             
-            correncyList = new()
-            {
-                new SelectListItem { Value = "LB", Text = "LB (not recomended)" , Selected = true},
-                new SelectListItem { Value = "USD", Text = "USD" },
-                new SelectListItem { Value = "EURO", Text = "EURO" },
-            };
+            correncyList = Currency.getCurrencyList();
+
 
             if(loan.Amount<=0)
             {

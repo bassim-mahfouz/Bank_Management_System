@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 using Bank_Management_System.Models;
 using Bank_Management_System.Repositories;
+using Bank_Management_System.Services;
 using System;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
@@ -38,12 +39,7 @@ namespace Bank_Management_System.Pages.Accounts
        
        public async Task<IActionResult> OnGet()
         {
-            correncyList = new()
-            {
-                new SelectListItem { Value = "LB", Text = "LB (not recomended)" , Selected = true},
-                new SelectListItem { Value = "USD", Text = "USD" },
-                new SelectListItem { Value = "EURO", Text = "EURO" },
-            };
+            correncyList = Currency.getCurrencyList();
             return Page();
         }
 
@@ -56,12 +52,8 @@ namespace Bank_Management_System.Pages.Accounts
                 return Page();
             }
             
-            correncyList = new()
-            {
-                new SelectListItem { Value = "LB", Text = "LB (not recomended)" , Selected = true},
-                new SelectListItem { Value = "USD", Text = "USD" },
-                new SelectListItem { Value = "EURO", Text = "EURO" },
-            };
+            correncyList = Currency.getCurrencyList();
+
             Customer customer=await _repository.GetCustomerById(id);
             DateTime localDate = DateTime.Now;
 

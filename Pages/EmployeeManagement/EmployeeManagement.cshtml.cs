@@ -20,7 +20,8 @@ namespace Bank_Management_System.Pages.EmployeeManagement
        
        public EmployeeRepository _repository{get;set;}
        
-       [BindProperty(SupportsGet=true)]
+       [BindProperty
+       (SupportsGet=true)]
        public String? name{get;set;}
 
        [BindProperty(SupportsGet=true)]
